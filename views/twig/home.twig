@@ -1,0 +1,57 @@
+{% extends 'layouts/home.twig' %}
+{% block body %}
+    <h2>Мы выведем эту последовательность</h2>
+    <form action="">
+        <input id="from" type="text" placeholder="Введите начальную точку последовательности"><br>
+        <p style="color: #f47272" id="error-from"></p>
+        <input id="to" type="text" placeholder="Введите конечную точку последовательности"><br>
+        <p style="color: #f47272" id="error-to"></p>
+        <button id="send" type="button">Получить результат</button>
+    </form>
+
+
+    <div style="margin-top: 10px" id="result"></div>
+
+    <script>
+      $(document).ready(function () {
+        $("#send").click(function () {
+          getRate();
+        });
+      });
+
+      /**
+       * Получение последовательности
+       */
+      function getRate() {
+        const resultField = $('#result')
+        const errorFrom = $('#error-from')
+        const errorTo = $('#error-to')
+
+
+        resultField.html('')
+        errorFrom.html('')
+        errorTo.html('')
+        $.ajax({
+          url: "{{ url }}" + '?from=' + $('#from').val() + '&to=' + $('#to').val(),
+        }).done(function (response) {
+          if (response?.rate) {
+            resultField.html('Результат: ' + response.rate)
+          }
+
+          if (!response.error) {
+            return
+          }
+
+          if (response?.error?.from?.length) {
+            errorFrom.html(response.error.from.join(' '))
+          }
+
+          if (response?.error?.to?.length) {
+            errorTo.html(response.error.to.join(' '))
+          }
+
+        });
+      }
+    </script>
+
+{% endblock %}

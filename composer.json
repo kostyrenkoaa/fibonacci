@@ -1,0 +1,15 @@
+{
+  "require": {
+    "twig/twig": "^2.0",
+    "symfony/http-foundation": "^v6.0.2",
+    "ext-simplexml": "*",
+    "ext-json": "*",
+    "webmozart/assert": "^1.10",
+    "ext-redis": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "./"
+    }
+  }
+}
